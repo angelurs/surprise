@@ -30,13 +30,76 @@
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--text-main);
       background: linear-gradient(145deg, var(--bg-gradient-start), var(--bg-gradient-end));
+      padding: 24px;
+      overflow-x: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
-      overflow-x: hidden;
     }
 
+    @media (max-width: 600px) {
+      body {
+        padding: 16px;
+      }
+    }
+
+    /* INTRO (bouquet) SCREEN */
+    .intro {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, #ffe5f0, #ffc8da, #ffb6c1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      transition: transform 0.8s ease, opacity 0.8s ease;
+    }
+
+    .intro-content {
+      text-align: center;
+      color: #5b203a;
+      padding: 32px 24px;
+    }
+
+    .intro-bouquet {
+      font-size: 4.4rem;
+      margin-bottom: 10px;
+      animation: gentle-bounce 1.6s ease-in-out infinite;
+    }
+
+    .intro-title {
+      font-family: "Playfair Display", serif;
+      font-size: 2rem;
+      margin-bottom: 6px;
+    }
+
+    .intro-subtitle {
+      font-size: 0.98rem;
+      opacity: 0.9;
+      margin-bottom: 14px;
+    }
+
+    .intro-hint {
+      font-size: 0.85rem;
+      opacity: 0.85;
+    }
+
+    .intro-hint span {
+      font-weight: 500;
+    }
+
+    .intro-leave {
+      transform: scale(1.15);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @keyframes gentle-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Main content wrapper (garden) */
     .garden-wrapper {
       max-width: 960px;
       width: 100%;
@@ -47,12 +110,20 @@
       padding: 32px 24px 28px;
       position: relative;
       overflow: hidden;
+      opacity: 0;
+      transform: scale(0.97) translateY(6px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
 
     @media (min-width: 768px) {
       .garden-wrapper {
         padding: 40px 40px 32px;
       }
+    }
+
+    .garden-visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
     }
 
     /* Soft glowing circles in background */
@@ -310,14 +381,29 @@
   </style>
 </head>
 <body>
-  <!-- Floating petals for ambience -->
+  <!-- Floating petals behind everything -->
   <div class="petal"></div>
   <div class="petal"></div>
   <div class="petal"></div>
   <div class="petal"></div>
   <div class="petal"></div>
 
-  <div class="garden-wrapper">
+  <!-- INTRO SCREEN -->
+  <div class="intro" id="intro">
+    <div class="intro-content">
+      <div class="intro-bouquet">💐</div>
+      <div class="intro-title">For You</div>
+      <p class="intro-subtitle">
+        I picked this little bouquet just for you.
+      </p>
+      <p class="intro-hint">
+        <span>Tap</span> or <span>click</span> the bouquet to see what’s hidden inside.
+      </p>
+    </div>
+  </div>
+
+  <!-- MAIN GARDEN CONTENT -->
+  <div class="garden-wrapper" id="garden">
     <div class="glow g1"></div>
     <div class="glow g2"></div>
 
@@ -336,7 +422,8 @@
 
     <!-- FLOWER GRID -->
     <section class="garden-grid">
-      <!-- You can edit the text inside data-title and data-message -->
+      <!-- Edit these flowers / messages to personalize -->
+
       <div class="flower"
            data-emoji="🌸"
            data-title="The Day We Met"
@@ -349,7 +436,7 @@
       <div class="flower"
            data-emoji="🌹"
            data-title="Our First Date"
-           data-message="I was nervous. You were beautiful.\n\nI replayed your smile in my head the entire way home and couldn’t stop thinking, “I really hope I get to see them again.”">
+           data-message="I was nervous. You were beautiful.\n\nI replayed your smile in my head the entire way home and couldn’t stop thinking, “I really hope I get to see you again.”">
         <span class="flower-emoji">🌹</span>
         <span class="flower-label">Our First Date</span>
         <p class="flower-snippet">Where butterflies became real 🦋</p>
@@ -414,6 +501,24 @@
   </div>
 
   <script>
+    // Intro logic
+    const intro = document.getElementById("intro");
+    const garden = document.getElementById("garden");
+
+    const enterGarden = () => {
+      if (!intro.classList.contains("intro-leave")) {
+        intro.classList.add("intro-leave");
+        garden.classList.add("garden-visible");
+        setTimeout(() => {
+          intro.style.display = "none";
+        }, 800);
+      }
+    };
+
+    intro.addEventListener("click", enterGarden);
+    intro.addEventListener("touchstart", enterGarden);
+
+    // Flower modal logic
     const flowers = document.querySelectorAll(".flower");
     const modalBackdrop = document.getElementById("modalBackdrop");
     const modalEmoji = document.getElementById("modalEmoji");
@@ -429,7 +534,7 @@
 
         modalEmoji.textContent = emoji;
         modalTitle.textContent = title;
-        modalBody.textContent = ""; // clear old
+        modalBody.textContent = "";
         modalBody.textContent = message;
 
         modalBackdrop.classList.add("active");
