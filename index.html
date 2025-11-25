@@ -151,6 +151,10 @@
     header {
       text-align: center;
       margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
 
     .tag {
@@ -169,8 +173,9 @@
     h1 {
       font-family: "Playfair Display", serif;
       font-size: 2.1rem;
-      margin-top: 12px;
-      margin-bottom: 8px;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      text-align: center;
     }
 
     @media (min-width: 768px) {
@@ -191,11 +196,39 @@
       color: var(--accent);
     }
 
+    /* Music toggle button */
+    .music-toggle {
+      border: none;
+      outline: none;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 111, 169, 0.08);
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.18s ease, transform 0.16s ease;
+    }
+
+    .music-toggle:hover {
+      background: rgba(255, 111, 169, 0.18);
+      transform: translateY(-1px);
+    }
+
     .garden-grid {
       margin-top: 28px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 18px;
+    }
+
+    @media (max-width: 600px) {
+      .garden-grid {
+        gap: 14px;
+      }
     }
 
     .flower {
@@ -210,6 +243,12 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+    }
+
+    @media (max-width: 600px) {
+      .flower {
+        padding: 18px 16px;
+      }
     }
 
     .flower::before {
@@ -240,6 +279,12 @@
     .flower-label {
       font-size: 0.95rem;
       font-weight: 500;
+    }
+
+    @media (max-width: 600px) {
+      .flower-label {
+        font-size: 1rem;
+      }
     }
 
     .flower-snippet {
@@ -412,6 +457,12 @@
         <span>🌷</span>
         <span>Our Garden of Love</span>
       </div>
+
+      <!-- MUSIC TOGGLE BUTTON -->
+      <button class="music-toggle" id="musicToggle">
+        🎵 <span>Play our song</span>
+      </button>
+
       <h1>Every Flower Is a Memory with You</h1>
       <p class="subtitle">
         I made this little garden for you. Each flower hides a moment,
@@ -500,6 +551,12 @@
     </div>
   </div>
 
+  <!-- BACKGROUND MUSIC (replace src with your song) -->
+  <audio id="bgMusic" loop preload="auto">
+    <!-- Example: put an .mp3 link here -->
+    <!-- <source src="https://your-link-here/song.mp3" type="audio/mpeg" /> -->
+  </audio>
+
   <script>
     // Intro logic
     const intro = document.getElementById("intro");
@@ -526,7 +583,11 @@
     const modalBody = document.getElementById("modalBody");
     const modalCloseBtn = document.getElementById("modalCloseBtn");
 
-    flowers.forEach(flower => {
+    // Track clicked flowers for "you found them all" surprise
+    const clickedFlowers = new Set();
+    const footerNoteSpan = document.querySelector(".footer-note span");
+
+    flowers.forEach((flower, index) => {
       flower.addEventListener("click", () => {
         const emoji = flower.dataset.emoji || "🌸";
         const title = flower.dataset.title || "A Memory";
@@ -538,6 +599,14 @@
         modalBody.textContent = message;
 
         modalBackdrop.classList.add("active");
+
+        // Mark this flower as clicked
+        clickedFlowers.add(index);
+
+        // If she has opened all of them at least once
+        if (clickedFlowers.size === flowers.length && footerNoteSpan) {
+          footerNoteSpan.textContent = "You found every flower in our little garden. I love you. 💕";
+        }
       });
     });
 
@@ -558,6 +627,28 @@
         closeModal();
       }
     });
+
+    // Music toggle logic
+    const music = document.getElementById("bgMusic");
+    const musicToggle = document.getElementById("musicToggle");
+    let isPlaying = false;
+
+    if (musicToggle && music) {
+      musicToggle.addEventListener("click", () => {
+        if (!isPlaying) {
+          music.play().then(() => {
+            isPlaying = true;
+            musicToggle.innerHTML = "⏸ <span>Pause our song</span>";
+          }).catch(() => {
+            // If browser blocks play, we just do nothing silently
+          });
+        } else {
+          music.pause();
+          isPlaying = false;
+          musicToggle.innerHTML = "🎵 <span>Play our song</span>";
+        }
+      });
+    }
   </script>
 </body>
 </html>
