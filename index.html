@@ -398,6 +398,7 @@
     /* Floating petals (subtle) */
     .petal {
       position: fixed;
+      top: -12vh;
       width: 14px;
       height: 22px;
       border-radius: 50% 50% 50% 0;
@@ -417,19 +418,19 @@
 
     @keyframes float {
       0% {
-        transform: translateX(0) translateY(0) rotate(0deg);
+        transform: translateX(0) translateY(-8vh) rotate(0deg);
       }
       25% {
-        transform: translateX(15px) translateY(25vh) rotate(40deg);
+        transform: translateX(15px) translateY(20vh) rotate(40deg);
       }
       50% {
-        transform: translateX(-20px) translateY(60vh) rotate(90deg);
+        transform: translateX(-20px) translateY(50vh) rotate(90deg);
       }
       75% {
-        transform: translateX(10px) translateY(90vh) rotate(130deg);
+        transform: translateX(10px) translateY(85vh) rotate(130deg);
       }
       100% {
-        transform: translateX(-15px) translateY(130vh) rotate(180deg);
+        transform: translateX(-15px) translateY(125vh) rotate(180deg);
       }
     }
   </style>
