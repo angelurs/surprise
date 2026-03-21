@@ -331,26 +331,36 @@
       animation: pop-in 0.24s ease-out;
     }
 
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
     @media (min-width: 640px) {
       .modal {
         padding: 24px 24px 20px;
       }
     }
 
-    .modal-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .modal-emoji {
-      font-size: 1.8rem;
-    }
-
     .modal-title {
       font-family: "Playfair Display", serif;
       font-size: 1.3rem;
+      text-align: center;
+    }
+
+    .modal-photo {
+      width: min(100%, 320px);
+      height: auto;
+      border-radius: 14px;
+      object-fit: cover;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+      display: none;
+    }
+
+    .modal-photo.visible {
+      display: block;
     }
 
     .modal-body {
@@ -358,7 +368,8 @@
       line-height: 1.6;
       color: var(--text-soft);
       white-space: pre-line;
-      margin-bottom: 14px;
+      text-align: center;
+      width: 100%;
     }
 
     .modal-close-row {
@@ -488,6 +499,7 @@
       <div class="flower"
            data-emoji="🌸"
            data-title="The Day We Met"
+           data-photo=""
            data-message="I still remember the first moment I saw you.\n\nI didn’t know it yet, but that was the day everything started to feel a little bit more like home.">
         <span class="flower-emoji">🌸</span>
         <span class="flower-label">The Day We Met</span>
@@ -497,6 +509,7 @@
       <div class="flower"
            data-emoji="🌹"
            data-title="Our First Date"
+           data-photo=""
            data-message="I was nervous. You were beautiful.\n\nI replayed your smile in my head the entire way home and couldn’t stop thinking, “I really hope I get to see you again.”">
         <span class="flower-emoji">🌹</span>
         <span class="flower-label">Our First Date</span>
@@ -506,6 +519,7 @@
       <div class="flower"
            data-emoji="🌼"
            data-title="My Safe Place"
+           data-photo=""
            data-message="You have this magic ability to make everything feel lighter.\n\nWhen things get heavy, being next to you is the one place where my heart feels calm.">
         <span class="flower-emoji">🌼</span>
         <span class="flower-label">My Safe Place</span>
@@ -515,6 +529,7 @@
       <div class="flower"
            data-emoji="💐"
            data-title="A Bouquet of Little Moments"
+           data-photo=""
            data-message="It’s the tiny things:\n• Your laugh\n• The way you tell stories\n• The way you say my name\n\nThey might look small from the outside, but to me they’re a whole world.">
         <span class="flower-emoji">💐</span>
         <span class="flower-label">Little Moments</span>
@@ -524,6 +539,7 @@
       <div class="flower"
            data-emoji="🌻"
            data-title="You Make Life Brighter"
+           data-photo=""
            data-message="Some days are cloudy, some are messy.\nBut you… you’re like a sunflower — always bringing light, even when the sky isn’t clear.\n\nThank you for being that brightness in my life.">
         <span class="flower-emoji">🌻</span>
         <span class="flower-label">Sunflower Days</span>
@@ -533,6 +549,7 @@
       <div class="flower"
            data-emoji="🌷"
            data-title="Our Future"
+           data-photo=""
            data-message="I don’t know exactly where life will take us.\n\nBut I do know this: I want to keep choosing you, growing with you, and filling our garden with a thousand more memories.">
         <span class="flower-emoji">🌷</span>
         <span class="flower-label">Growing Together</span>
@@ -542,6 +559,7 @@
       <div class="flower"
            data-emoji="🎡"
            data-title="That Spontaneous Night Out"
+           data-photo=""
            data-message="No plans, no map, just us wandering around laughing at everything.\n\nI love how even ordinary nights turn into core memories with you.">
         <span class="flower-emoji">🎡</span>
         <span class="flower-label">Spontaneous Night</span>
@@ -551,6 +569,7 @@
       <div class="flower"
            data-emoji="🍜"
            data-title="Late-Night Food Run"
+           data-photo=""
            data-message="We said we’d just grab one snack... and came back with enough for a feast.\n\nSharing silly late-night cravings with you is one of my favorite little traditions.">
         <span class="flower-emoji">🍜</span>
         <span class="flower-label">Midnight Cravings</span>
@@ -560,6 +579,7 @@
       <div class="flower"
            data-emoji="🌧️"
            data-title="Dancing in the Rain"
+           data-photo=""
            data-message="When the rain started, we could’ve run for cover.\nInstead, we stayed, laughed, and made the storm feel beautiful.\n\nYou make even messy moments magical.">
         <span class="flower-emoji">🌧️</span>
         <span class="flower-label">Rainy-Day Magic</span>
@@ -569,6 +589,7 @@
       <div class="flower"
            data-emoji="📸"
            data-title="Our Favorite Photo"
+           data-photo=""
            data-message="That one picture where we’re both mid-laugh and totally unposed?\n\nIt reminds me that the happiest versions of us are always the real ones.">
         <span class="flower-emoji">📸</span>
         <span class="flower-label">Captured Joy</span>
@@ -584,12 +605,12 @@
   <!-- MODAL -->
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal" role="dialog" aria-modal="true">
-      <div class="modal-header">
-        <span class="modal-emoji" id="modalEmoji">🌸</span>
+      <div class="modal-content">
         <h2 class="modal-title" id="modalTitle">Title</h2>
-      </div>
-      <div class="modal-body" id="modalBody">
-        Message goes here.
+        <img class="modal-photo" id="modalPhoto" alt="Memory photo" />
+        <div class="modal-body" id="modalBody">
+          Message goes here.
+        </div>
       </div>
       <div class="modal-close-row">
         <button class="btn-close" id="modalCloseBtn">Close</button>
@@ -624,8 +645,8 @@
     // Flower modal logic
     const flowers = document.querySelectorAll(".flower");
     const modalBackdrop = document.getElementById("modalBackdrop");
-    const modalEmoji = document.getElementById("modalEmoji");
     const modalTitle = document.getElementById("modalTitle");
+    const modalPhoto = document.getElementById("modalPhoto");
     const modalBody = document.getElementById("modalBody");
     const modalCloseBtn = document.getElementById("modalCloseBtn");
 
@@ -635,12 +656,20 @@
 
     flowers.forEach((flower, index) => {
       flower.addEventListener("click", () => {
-        const emoji = flower.dataset.emoji || "🌸";
         const title = flower.dataset.title || "A Memory";
         const message = flower.dataset.message || "";
+        const photo = flower.dataset.photo || "";
 
-        modalEmoji.textContent = emoji;
         modalTitle.textContent = title;
+        if (photo) {
+          modalPhoto.src = photo;
+          modalPhoto.alt = `${title} photo`;
+          modalPhoto.classList.add("visible");
+        } else {
+          modalPhoto.removeAttribute("src");
+          modalPhoto.alt = "Memory photo";
+          modalPhoto.classList.remove("visible");
+        }
         modalBody.textContent = "";
         modalBody.textContent = message;
 
