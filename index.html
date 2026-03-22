@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Our Garden of Love</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -43,7 +42,6 @@
       }
     }
 
-    /* INTRO (bouquet) SCREEN */
     .intro {
       position: fixed;
       inset: 0;
@@ -99,7 +97,6 @@
       50% { transform: translateY(-6px); }
     }
 
-    /* Main content wrapper (garden) */
     .garden-wrapper {
       max-width: 960px;
       width: 100%;
@@ -126,7 +123,6 @@
       transform: scale(1) translateY(0);
     }
 
-    /* Soft glowing circles in background */
     .glow {
       position: absolute;
       width: 260px;
@@ -196,7 +192,6 @@
       color: var(--accent);
     }
 
-    /* Music toggle button */
     .music-toggle {
       border: none;
       outline: none;
@@ -209,7 +204,7 @@
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
       transition: background 0.18s ease, transform 0.16s ease;
     }
 
@@ -243,6 +238,9 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+      text-align: left;
+      font: inherit;
+      color: inherit;
     }
 
     @media (max-width: 600px) {
@@ -304,7 +302,6 @@
       color: var(--accent);
     }
 
-    /* Modal / popup */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -323,6 +320,8 @@
     .modal {
       max-width: 520px;
       width: 100%;
+      max-height: min(88vh, 820px);
+      overflow-y: auto;
       background: #ffffff;
       border-radius: 20px;
       padding: 20px 18px 18px;
@@ -351,6 +350,32 @@
     .modal-title {
       font-family: "Playfair Display", serif;
       font-size: 1.3rem;
+    }
+
+    .modal-media {
+      display: none;
+      justify-content: center;
+      margin: 8px 0 14px;
+    }
+
+    .modal-media.active {
+      display: flex;
+    }
+
+    .modal-image {
+      width: auto;
+      max-width: 100%;
+      max-height: min(52vh, 420px);
+      border-radius: 16px;
+      object-fit: contain;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+      background: #fff7fb;
+    }
+
+    @media (max-width: 600px) {
+      .modal-image {
+        max-height: min(44vh, 320px);
+      }
     }
 
     .modal-body {
@@ -395,7 +420,6 @@
       }
     }
 
-    /* Floating petals (subtle) */
     .petal {
       position: fixed;
       top: -12vh;
@@ -436,14 +460,12 @@
   </style>
 </head>
 <body>
-  <!-- Floating petals behind everything -->
   <div class="petal"></div>
   <div class="petal"></div>
   <div class="petal"></div>
   <div class="petal"></div>
   <div class="petal"></div>
 
-  <!-- INTRO SCREEN -->
   <div class="intro" id="intro">
     <div class="intro-content">
       <div class="intro-bouquet">💐</div>
@@ -457,7 +479,6 @@
     </div>
   </div>
 
-  <!-- MAIN GARDEN CONTENT -->
   <div class="garden-wrapper" id="garden">
     <div class="glow g1"></div>
     <div class="glow g2"></div>
@@ -468,10 +489,7 @@
         <span>Our Garden of Love</span>
       </div>
 
-      <!-- MUSIC TOGGLE BUTTON -->
-      <button class="music-toggle" id="musicToggle">
-        🎵 <span>Dedicated to my beautiful sweet girl, Esteicy ❤️</span>
-      </button>
+      <button class="music-toggle" id="musicToggle">Dedicated to my beautiful sweet girl, Esteicy ❤️</button>
 
       <h1>Every Flower Is a Memory with You</h1>
       <p class="subtitle">
@@ -481,112 +499,21 @@
       </p>
     </header>
 
-    <!-- FLOWER GRID -->
-    <section class="garden-grid">
-      <!-- Edit these flowers / messages to personalize -->
-
-      <div class="flower"
-           data-emoji="🌸"
-           data-title="The Day We Met"
-           data-message="I still remember the first moment I saw you.\n\nI didn’t know it yet, but that was the day everything started to feel a little bit more like home.">
-        <span class="flower-emoji">🌸</span>
-        <span class="flower-label">The Day We Met</span>
-        <p class="flower-snippet">The beginning of us 💫</p>
-      </div>
-
-      <div class="flower"
-           data-emoji="🌹"
-           data-title="Our First Date"
-           data-message="I was nervous. You were beautiful.\n\nI replayed your smile in my head the entire way home and couldn’t stop thinking, “I really hope I get to see you again.”">
-        <span class="flower-emoji">🌹</span>
-        <span class="flower-label">Our First Date</span>
-        <p class="flower-snippet">Where butterflies became real 🦋</p>
-      </div>
-
-      <div class="flower"
-           data-emoji="🌼"
-           data-title="My Safe Place"
-           data-message="You have this magic ability to make everything feel lighter.\n\nWhen things get heavy, being next to you is the one place where my heart feels calm.">
-        <span class="flower-emoji">🌼</span>
-        <span class="flower-label">My Safe Place</span>
-        <p class="flower-snippet">Where my heart rests 🤍</p>
-      </div>
-
-      <div class="flower"
-           data-emoji="💐"
-           data-title="A Bouquet of Little Moments"
-           data-message="It’s the tiny things:\n• Your laugh\n• The way you tell stories\n• The way you say my name\n\nThey might look small from the outside, but to me they’re a whole world.">
-        <span class="flower-emoji">💐</span>
-        <span class="flower-label">Little Moments</span>
-        <p class="flower-snippet">The small things I adore ✨</p>
-      </div>
-
-      <div class="flower"
-           data-emoji="🌻"
-           data-title="You Make Life Brighter"
-           data-message="Some days are cloudy, some are messy.\nBut you… you’re like a sunflower — always bringing light, even when the sky isn’t clear.\n\nThank you for being that brightness in my life.">
-        <span class="flower-emoji">🌻</span>
-        <span class="flower-label">Sunflower Days</span>
-        <p class="flower-snippet">You’re my sunshine ☀️</p>
-      </div>
-
-      <div class="flower"
-           data-emoji="🌷"
-           data-title="Our Future"
-           data-message="I don’t know exactly where life will take us.\n\nBut I do know this: I want to keep choosing you, growing with you, and filling our garden with a thousand more memories.">
-        <span class="flower-emoji">🌷</span>
-        <span class="flower-label">Growing Together</span>
-        <p class="flower-snippet">The best is yet to bloom 🌱</p>
-      </div>
-
-      <div class="flower"
-           data-emoji="🎡"
-           data-title="That Spontaneous Night Out"
-           data-message="No plans, no map, just us wandering around laughing at everything.\n\nI love how even ordinary nights turn into core memories with you.">
-        <span class="flower-emoji">🎡</span>
-        <span class="flower-label">Spontaneous Night</span>
-        <p class="flower-snippet">Our best plans are unplanned 🌙</p>
-      </div>
-
-      <div class="flower"
-           data-emoji="🍜"
-           data-title="Late-Night Food Run"
-           data-message="We said we’d just grab one snack... and came back with enough for a feast.\n\nSharing silly late-night cravings with you is one of my favorite little traditions.">
-        <span class="flower-emoji">🍜</span>
-        <span class="flower-label">Midnight Cravings</span>
-        <p class="flower-snippet">Love served after hours 💕</p>
-      </div>
-
-      <div class="flower"
-           data-emoji="🌧️"
-           data-title="Dancing in the Rain"
-           data-message="When the rain started, we could’ve run for cover.\nInstead, we stayed, laughed, and made the storm feel beautiful.\n\nYou make even messy moments magical.">
-        <span class="flower-emoji">🌧️</span>
-        <span class="flower-label">Rainy-Day Magic</span>
-        <p class="flower-snippet">You turn storms into songs ☔</p>
-      </div>
-
-      <div class="flower"
-           data-emoji="📸"
-           data-title="Our Favorite Photo"
-           data-message="That one picture where we’re both mid-laugh and totally unposed?\n\nIt reminds me that the happiest versions of us are always the real ones.">
-        <span class="flower-emoji">📸</span>
-        <span class="flower-label">Captured Joy</span>
-        <p class="flower-snippet">Frozen laughter, forever us ✨</p>
-      </div>
-    </section>
+    <section class="garden-grid" id="gardenGrid"></section>
 
     <p class="footer-note">
       This garden will keep growing, one memory at a time. <span>Thank you for being in my life.</span>
     </p>
   </div>
 
-  <!-- MODAL -->
   <div class="modal-backdrop" id="modalBackdrop">
-    <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <div class="modal-header">
         <span class="modal-emoji" id="modalEmoji">🌸</span>
         <h2 class="modal-title" id="modalTitle">Title</h2>
+      </div>
+      <div class="modal-media" id="modalMedia">
+        <img class="modal-image" id="modalImage" alt="" loading="lazy" />
       </div>
       <div class="modal-body" id="modalBody">
         Message goes here.
@@ -597,16 +524,135 @@
     </div>
   </div>
 
-  <!-- BACKGROUND MUSIC (replace src with your song) -->
-  <audio id="bgMusic" loop preload="auto">
-    <!-- Example: put an .mp3 link here -->
-    <!-- <source src="https://your-link-here/song.mp3" type="audio/mpeg" /> -->
-  </audio>
+  <audio id="bgMusic" loop preload="auto"></audio>
 
   <script>
-    // Intro logic
+    const memories = [
+      {
+        emoji: "🌸",
+        title: "The Day We Met",
+        label: "The Day We Met",
+        snippet: "The beginning of us 💫",
+        message: "I still remember the first moment I saw you.\n\nI didn’t know it yet, but that was the day everything started to feel a little bit more like home.",
+        image: "images/IMG_0493.HEIC"
+      },
+      {
+        emoji: "🌹",
+        title: "Our First Date",
+        label: "Our First Date",
+        snippet: "Where butterflies became real 🦋",
+        message: "I was nervous. You were beautiful.\n\nI replayed your smile in my head the entire way home and couldn’t stop thinking, “I really hope I get to see you again.”",
+        image: "images/IMG_0551.jpg"
+      },
+      {
+        emoji: "🌼",
+        title: "My Safe Place",
+        label: "My Safe Place",
+        snippet: "Where my heart rests 🤍",
+        message: "You have this magic ability to make everything feel lighter.\n\nWhen things get heavy, being next to you is the one place where my heart feels calm.",
+        image: "images/IMG_2734.HEIC"
+      },
+      {
+        emoji: "💐",
+        title: "A Bouquet of Little Moments",
+        label: "Little Moments",
+        snippet: "The small things I adore ✨",
+        message: "It’s the tiny things:\n• Your laugh\n• The way you tell stories\n• The way you say my name\n\nThey might look small from the outside, but to me they’re a whole world.",
+        image: "images/IMG_5055.HEIC"
+      },
+      {
+        emoji: "🌻",
+        title: "You Make Life Brighter",
+        label: "Sunflower Days",
+        snippet: "You’re my sunshine ☀️",
+        message: "Some days are cloudy, some are messy.\nBut you… you’re like a sunflower — always bringing light, even when the sky isn’t clear.\n\nThank you for being that brightness in my life.",
+        image: "images/IMG_6095.HEIC"
+      },
+      {
+        emoji: "🌷",
+        title: "Our Future",
+        label: "Growing Together",
+        snippet: "The best is yet to bloom 🌱",
+        message: "I don’t know exactly where life will take us.\n\nBut I do know this: I want to keep choosing you, growing with you, and filling our garden with a thousand more memories.",
+        image: "images/IMG_6304.HEIC"
+      },
+      {
+        emoji: "🎡",
+        title: "That Spontaneous Night Out",
+        label: "Spontaneous Night",
+        snippet: "Our best plans are unplanned 🌙",
+        message: "No plans, no map, just us wandering around laughing at everything.\n\nI love how even ordinary nights turn into core memories with you.",
+        image: "images/IMG_7087.HEIC"
+      },
+      {
+        emoji: "🍜",
+        title: "Late-Night Food Run",
+        label: "Midnight Cravings",
+        snippet: "Love served after hours 💕",
+        message: "We said we’d just grab one snack... and came back with enough for a feast.\n\nSharing silly late-night cravings with you is one of my favorite little traditions.",
+        image: "images/IMG_7609.HEIC"
+      },
+      {
+        emoji: "🌧️",
+        title: "Dancing in the Rain",
+        label: "Rainy-Day Magic",
+        snippet: "You turn storms into songs ☔",
+        message: "When the rain started, we could’ve run for cover.\nInstead, we stayed, laughed, and made the storm feel beautiful.\n\nYou make even messy moments magical.",
+        image: "images/IMG_7701.JPG"
+      },
+      {
+        emoji: "📸",
+        title: "Our Favorite Photo",
+        label: "Captured Joy",
+        snippet: "Frozen laughter, forever us ✨",
+        message: "That one picture where we’re both mid-laugh and totally unposed?\n\nIt reminds me that the happiest versions of us are always the real ones.",
+        image: "images/IMG_7918.HEIC"
+      },
+      {
+        emoji: "🌙",
+        title: "Soft Nights With You",
+        label: "Soft Nights",
+        snippet: "Everything feels calmer with you 🌙",
+        message: "There’s something about the quiet moments with you that makes the whole world slow down in the best way.\n\nI could stay in that peace with you forever.",
+        image: "images/IMG_7943.HEIC"
+      },
+      {
+        emoji: "🧸",
+        title: "Your Sweetest Side",
+        label: "Sweetest Side",
+        snippet: "You make tenderness look easy 🫶",
+        message: "You have the softest heart, and I notice it in all the little ways you care.\n\nThat sweetness is one of the biggest reasons I adore you so much.",
+        image: "images/IMG_8502.HEIC"
+      },
+      {
+        emoji: "✨",
+        title: "Main Character Energy",
+        label: "Star of My Day",
+        snippet: "You glow without even trying ✨",
+        message: "Sometimes I just look at you and think, wow, how are you even real?\n\nYou make ordinary moments feel cinematic just by being in them.",
+        image: "images/IMG_8740.JPG"
+      },
+      {
+        emoji: "🤍",
+        title: "Home Is You",
+        label: "Home Is You",
+        snippet: "My heart knows where it belongs 🤍",
+        message: "Home isn’t really a place to me anymore. It’s your laugh, your voice, your presence.\n\nWherever you are starts to feel like where I’m meant to be.",
+        image: "images/IMG_9545.HEIC"
+      },
+      {
+        emoji: "💖",
+        title: "Still Choosing You",
+        label: "Still Choosing You",
+        snippet: "Again and again, always you 💖",
+        message: "If I had the chance to choose all over again, I would still pick you in a heartbeat.\n\nThank you for being the sweetest part of my world.",
+        image: "images/IMG_9989.HEIC"
+      }
+    ];
+
     const intro = document.getElementById("intro");
     const garden = document.getElementById("garden");
+    const gardenGrid = document.getElementById("gardenGrid");
 
     const enterGarden = () => {
       if (!intro.classList.contains("intro-leave")) {
@@ -621,35 +667,60 @@
     intro.addEventListener("click", enterGarden);
     intro.addEventListener("touchstart", enterGarden);
 
-    // Flower modal logic
+    const renderMemories = () => {
+      const markup = memories.map((memory, index) => `
+        <button
+          class="flower"
+          type="button"
+          data-index="${index}"
+        >
+          <span class="flower-emoji">${memory.emoji}</span>
+          <span class="flower-label">${memory.label}</span>
+          <span class="flower-snippet">${memory.snippet}</span>
+        </button>
+      `).join("");
+
+      gardenGrid.innerHTML = markup;
+    };
+
+    renderMemories();
+
     const flowers = document.querySelectorAll(".flower");
     const modalBackdrop = document.getElementById("modalBackdrop");
     const modalEmoji = document.getElementById("modalEmoji");
     const modalTitle = document.getElementById("modalTitle");
+    const modalMedia = document.getElementById("modalMedia");
+    const modalImage = document.getElementById("modalImage");
     const modalBody = document.getElementById("modalBody");
     const modalCloseBtn = document.getElementById("modalCloseBtn");
-
-    // Track clicked flowers for "you found them all" surprise
     const clickedFlowers = new Set();
     const footerNoteSpan = document.querySelector(".footer-note span");
 
     flowers.forEach((flower, index) => {
       flower.addEventListener("click", () => {
-        const emoji = flower.dataset.emoji || "🌸";
-        const title = flower.dataset.title || "A Memory";
-        const message = flower.dataset.message || "";
+        const memory = memories[Number(flower.dataset.index)] || {};
+        const emoji = memory.emoji || "🌸";
+        const title = memory.title || "A Memory";
+        const message = memory.message || "";
+        const image = memory.image || "";
 
         modalEmoji.textContent = emoji;
         modalTitle.textContent = title;
-        modalBody.textContent = "";
         modalBody.textContent = message;
 
-        modalBackdrop.classList.add("active");
+        if (image) {
+          modalImage.src = image;
+          modalImage.alt = title;
+          modalMedia.classList.add("active");
+        } else {
+          modalImage.removeAttribute("src");
+          modalImage.alt = "";
+          modalMedia.classList.remove("active");
+        }
 
-        // Mark this flower as clicked
+        modalBackdrop.classList.add("active");
         clickedFlowers.add(index);
 
-        // If she has opened all of them at least once
         if (clickedFlowers.size === flowers.length && footerNoteSpan) {
           footerNoteSpan.textContent = "You found every flower in our little garden. I love you. 💕";
         }
@@ -662,19 +733,18 @@
 
     modalCloseBtn.addEventListener("click", closeModal);
 
-    modalBackdrop.addEventListener("click", (e) => {
-      if (e.target === modalBackdrop) {
+    modalBackdrop.addEventListener("click", (event) => {
+      if (event.target === modalBackdrop) {
         closeModal();
       }
     });
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
         closeModal();
       }
     });
 
-    // Music toggle logic
     const music = document.getElementById("bgMusic");
     const musicToggle = document.getElementById("musicToggle");
     let isPlaying = false;
@@ -684,14 +754,14 @@
         if (!isPlaying) {
           music.play().then(() => {
             isPlaying = true;
-            musicToggle.innerHTML = "⏸ <span>Dedicated to my beautiful sweet girl, Esteicy ❤️</span>";
+            musicToggle.textContent = "Pause dedication for my beautiful sweet girl, Esteicy ❤️";
           }).catch(() => {
-            // If browser blocks play, we just do nothing silently
+            // Browser may block autoplay until a valid source is added.
           });
         } else {
           music.pause();
           isPlaying = false;
-          musicToggle.innerHTML = "🎵 <span>Dedicated to my beautiful sweet girl, Esteicy ❤️</span>";
+          musicToggle.textContent = "Dedicated to my beautiful sweet girl, Esteicy ❤️";
         }
       });
     }
